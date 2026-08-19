@@ -89,6 +89,12 @@ nav .links a.active{color:var(--accent);background:var(--accent-soft);}
 .hero .days span{font-size:13px;color:var(--ink-soft);}
 .hero .days.hidden{display:none;}
 /* ── 七夕限定 ── */
+.qixi-img{
+  width:320px;max-width:85%;display:block;
+  border-radius:16px;margin-bottom:20px;
+  box-shadow:0 6px 20px rgba(61,53,46,.10);
+  animation:qixiFloat 4.5s ease-in-out infinite;
+}
 .qixi-badge{
   display:inline-block;vertical-align:middle;margin-left:16px;
   font-size:13px;letter-spacing:.2em;color:var(--accent);
