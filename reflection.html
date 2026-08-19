@@ -48,6 +48,12 @@
 
 <div class="page-body">
   <div class="timeline" id="tl"></div>
+
+  <div class="group" style="margin-top:64px">
+    <h3 class="group-title">手写版</h3>
+    <p class="hand-note">有些话，一笔一画写下来，比打出来的字更真。</p>
+    <div class="handwriting" id="handwritingBox"></div>
+  </div>
 </div>
 
 <footer>
@@ -85,6 +91,19 @@
     }
     tl.appendChild(item);
   });
+  // 手写版照片
+  var hw = document.getElementById('handwritingBox');
+  if(hw){
+    if(handwriting){
+      var him = document.createElement('img');
+      him.src = handwriting;
+      him.alt = '手写反思';
+      him.className = 'hand-img';
+      hw.appendChild(him);
+    }else{
+      hw.innerHTML = '<div class="hand-ph">手写版照片位置 —— 拍好照放进 photos 文件夹，在 data.js 里填 handwriting 路径</div>';
+    }
+  }
   if('IntersectionObserver' in window){
     var io = new IntersectionObserver(function(es){
       es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });

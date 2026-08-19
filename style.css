@@ -88,6 +88,31 @@ nav .links a.active{color:var(--accent);background:var(--accent-soft);}
 }
 .hero .days span{font-size:13px;color:var(--ink-soft);}
 .hero .days.hidden{display:none;}
+/* ── 七夕限定 ── */
+.qixi-badge{
+  display:inline-block;vertical-align:middle;margin-left:16px;
+  font-size:13px;letter-spacing:.2em;color:var(--accent);
+  border:1px solid var(--accent);border-radius:999px;
+  padding:6px 16px;font-family:var(--sans);font-weight:400;
+  animation:qixiPulse 2.4s ease-in-out infinite;
+}
+.qixi-line{
+  font-size:14.5px;color:var(--accent);margin-top:12px;
+}
+.qixi-stars{position:relative;height:0;}
+.qstar{
+  position:absolute;color:var(--accent);opacity:.5;
+  animation:qixiFloat 3.6s ease-in-out infinite;
+}
+.qstar.s1{left:-30px;top:-8px;font-size:18px;}
+.qstar.s2{right:-42px;top:-26px;font-size:22px;animation-delay:.9s;}
+.qstar.s3{right:-16px;top:6px;font-size:14px;animation-delay:1.8s;}
+@keyframes qixiPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.07);}}
+@keyframes qixiFloat{0%,100%{transform:translateY(0);opacity:.35;}50%{transform:translateY(-8px);opacity:.7;}}
+@media(prefers-reduced-motion:reduce){
+  .qixi-badge{animation:none;}
+  .qstar{animation:none;}
+}
 /* ── 独立页头部 ── */
 .page-hero{
   max-width:960px;margin:0 auto;padding:80px 24px 16px;
@@ -205,6 +230,15 @@ section{max-width:960px;margin:0 auto;padding:72px 24px;}
 }
 .like-row .txt{font-size:15px;color:var(--ink);}
 .like-row .txt .todo{color:#b8aa99;}
+/* ── 手写版(反思页底部) ── */
+.hand-note{font-size:13.5px;color:var(--ink-soft);margin-top:-6px;margin-bottom:18px;}
+.handwriting{max-width:720px;}
+.hand-img{max-width:100%;border-radius:10px;border:1px solid var(--line);box-shadow:0 4px 14px rgba(61,53,46,.08);}
+.hand-ph{
+  border:1.5px dashed #c9b9a6;border-radius:10px;
+  padding:52px 20px;text-align:center;color:var(--ink-soft);
+  font-size:13px;letter-spacing:.1em;background:var(--paper);
+}
 /* ── 照片墙分组标题 ── */
 .group{margin-bottom:56px;}
 .group-title{
