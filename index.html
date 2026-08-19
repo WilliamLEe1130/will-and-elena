@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will & Elena</title>
+<link rel="stylesheet" href="style.css">
+<script src="gate.js"></script>
+<!--
+  ══════════════════════════════════════════
+  主页(Will & Elena 网站)
+  · 所有内容(纪念日/反思/时刻/照片/喜好)都在 data.js 里改
+  · 本页能改的:板块标题(<h2>)、副标题(<p>)、页脚(<footer>)
+  · 照片数量:data.js 里 homeElenaCount / homeBothCount
+  · 各板块"更多 →"链接:搜索 <a class="more" 修改 href
+  ══════════════════════════════════════════
+-->
+</head>
+<body>
+
+<header>
+  <nav>
+    <a class="brand" href="index.html">Will&nbsp;·&nbsp;Elena</a>
+    <div class="links">
+      <a href="reflection.html">反思</a>
+      <a href="moments.html">时刻</a>
+      <a href="gallery.html">照片</a>
+      <a href="likes.html">她喜欢的</a>
+    </div>
+  </nav>
+</header>
+
+<div class="cats left">
+  <img src="cats/cat1.jpg" alt="小猫">
+  <img src="cats/cat2.jpg" alt="小猫">
+  <img src="cats/cat5.jpg" alt="小猫">
+</div>
+<div class="cats right">
+  <img src="cats/cat3.jpg" alt="小猫">
+  <img src="cats/cat4.jpg" alt="小猫">
+  <img src="cats/cat6.jpg" alt="小猫">
+</div>
+
+<div class="hero" id="top">
+  <div class="kicker">OUR LITTLE PLACE</div>
+  <h1>Will <span class="amp">&amp;</span> Elena</h1>
+  <p>一点一点，把我们的日子、我的反思、你的喜好，都留在这里。</p>
+  <div class="days hidden" id="daysBox">
+    <b id="daysNum">0</b><span>天，在一起</span>
+  </div>
+</div>
+
+<section id="reflection">
+  <div class="sec-head fade">
+    <div class="sec-head-top">
+      <div>
+        <div class="no">01 / REFLECTION</div>
+        <h2>反思</h2>
+      </div>
+      <a class="more" href="reflection.html">更多 →</a>
+    </div>
+    <p>每一次惹你生气，我都记在这里——不是说说而已。</p>
+  </div>
+  <div class="timeline" id="tl"></div>
+</section>
+
+<section id="moments">
+  <div class="sec-head fade">
+    <div class="sec-head-top">
+      <div>
+        <div class="no">02 / MOMENTS</div>
+        <h2>重要时刻</h2>
+      </div>
+      <a class="more" href="moments.html">更多 →</a>
+    </div>
+    <p>日子会走，这些不会。</p>
+  </div>
+  <div class="moments-grid" id="momentsGrid" style="grid-template-columns:repeat(3,1fr)"></div>
+</section>
+
+<section id="gallery">
+  <div class="sec-head fade">
+    <div class="sec-head-top">
+      <div>
+        <div class="no">03 / GALLERY</div>
+        <h2>我们的照片</h2>
+      </div>
+      <a class="more" href="gallery.html">更多 →</a>
+    </div>
+    <p>慢慢填满。</p>
+  </div>
+  <div class="gallery" id="galleryGrid" style="grid-template-columns:repeat(3,1fr)">
+    <div class="group-title" style="grid-column:1/-1">ELENA</div>
+  </div>
+  <div class="gallery" id="galleryGrid2" style="grid-template-columns:repeat(3,1fr);margin-top:14px">
+    <div class="group-title" style="grid-column:1/-1">WILL &amp; ELENA</div>
+  </div>
+</section>
+
+<section id="likes">
+  <div class="sec-head fade">
+    <div class="sec-head-top">
+      <div>
+        <div class="no">04 / LIKES</div>
+        <h2>她喜欢的</h2>
+      </div>
+      <a class="more" href="likes.html">更多 →</a>
+    </div>
+    <p>你的喜好，我记着。</p>
+  </div>
+  <div class="likes" id="likesList"></div>
+</section>
+
+<footer>
+  做这个网站的人：<span class="heart">Will</span> · 写给Elena
+</footer>
+
+<script src="data.js"></script>
+<script>
+/* ── 主页渲染(数据在 data.js 里改) ── */
+(function(){
+  // 纪念日天数
+  if(anniversary){
+    var a = new Date(anniversary), t = new Date();
+    var d = Math.floor((t - a)/86400000);
+    if(d >= 0){
+      document.getElementById('daysNum').textContent = d;
+      document.getElementById('daysBox').classList.remove('hidden');
+    }
+  }
+  // 反思墙(主页只显示前两段,点"展开"看全部)
+  var tl = document.getElementById('tl');
+  reflections.forEach(function(r){
+    var item = document.createElement('div');
+    item.className = 'tl-item fade';
+    item.innerHTML = '<div class="date">'+r.date+'</div><h3>'+r.title+'</h3>';
+    var body = document.createElement('div');
+    body.className = 'body';
+    var paras = String(r.text).split(/\n\s*\n/);
+    paras.forEach(function(p){ if(p.trim()){ var pp = document.createElement('p'); pp.textContent = p.trim(); body.appendChild(pp); } });
+    item.appendChild(body);
+    if(paras.length > 2){
+      body.classList.add('collapsed');
+      var btn = document.createElement('button');
+      btn.className = 'expand-btn';
+      btn.textContent = '展开 ↓';
+      btn.addEventListener('click', function(){
+        if(body.classList.contains('collapsed')){
+          body.classList.remove('collapsed');
+          btn.textContent = '收起 ↑';
+        }else{
+          body.classList.add('collapsed');
+          btn.textContent = '展开 ↓';
+        }
+      });
+      item.appendChild(btn);
+    }
+    tl.appendChild(item);
+  });
+  // 重要时刻(主页只显示前几条,更多进独立页)
+  var mg = document.getElementById('momentsGrid');
+  moments.slice(0, homeMomentsCount).forEach(function(m){
+    var c = document.createElement('div');
+    c.className = 'moment-card fade';
+    c.innerHTML = '<div class="md">'+m.date+'</div><h3>'+m.title+'</h3><p>'+m.note+'</p>';
+    mg.appendChild(c);
+  });
+  // 照片墙(两组,主页只显示限量,更多进独立页)
+  function renderPhotos(boxId, arr, limit){
+    var gg = document.getElementById(boxId);
+    var n = Math.min(limit || arr.length, arr.length);
+    for(var i=0;i<n;i++){
+      var p = document.createElement('div');
+      p.className = 'photo fade';
+      var im = document.createElement('img');
+      im.src = arr[i];
+      im.alt = '我们的照片';
+      im.onerror = function(){ this.parentNode.innerHTML = '<div class="ph"><span class="dot"></span><span>照片位置</span></div>'; };
+      p.appendChild(im);
+      gg.appendChild(p);
+    }
+  }
+  renderPhotos('galleryGrid', photosElena, homeElenaCount);
+  renderPhotos('galleryGrid2', photosBoth, homeBothCount);
+  // 她喜欢的
+  var ll = document.getElementById('likesList');
+  likes.forEach(function(l){
+    var row = document.createElement('div');
+    row.className = 'like-row fade';
+    row.innerHTML = '<span class="cat">'+l.cat+'</span><span class="txt">'+l.txt+'</span>';
+    ll.appendChild(row);
+  });
+  // 滚动浮现
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    },{threshold:.12});
+    document.querySelectorAll('.fade').forEach(function(el){ io.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>

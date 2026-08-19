@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>反思 · Will & Elena</title>
+<link rel="stylesheet" href="style.css">
+<script src="gate.js"></script>
+<!--
+  ══════════════════════════════════════════
+  反思独立页
+  · 反思内容在 data.js 的 reflections 数组里改
+  · 本页能改的:大标题(<h1>)、副标题(<p>)
+  ══════════════════════════════════════════
+-->
+</head>
+<body>
+
+<header>
+  <nav>
+    <a class="brand" href="index.html">Will&nbsp;·&nbsp;Elena</a>
+    <div class="links">
+      <a href="reflection.html" class="active">反思</a>
+      <a href="moments.html">时刻</a>
+      <a href="gallery.html">照片</a>
+      <a href="likes.html">她喜欢的</a>
+    </div>
+  </nav>
+</header>
+
+<div class="cats left">
+  <img src="cats/cat1.jpg" alt="小猫">
+  <img src="cats/cat2.jpg" alt="小猫">
+  <img src="cats/cat5.jpg" alt="小猫">
+</div>
+<div class="cats right">
+  <img src="cats/cat3.jpg" alt="小猫">
+  <img src="cats/cat4.jpg" alt="小猫">
+  <img src="cats/cat6.jpg" alt="小猫">
+</div>
+
+<div class="page-hero">
+  <div class="no">01 / REFLECTION</div>
+  <h1>反思</h1>
+  <p>每一次惹你生气，我都记在这里——不是说说而已。</p>
+  <a class="back" href="index.html">← 返回主页</a>
+</div>
+
+<div class="page-body">
+  <div class="timeline" id="tl"></div>
+</div>
+
+<footer>
+  做这个网站的人：<span class="heart">Will</span> · 写给Elena
+</footer>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  var tl = document.getElementById('tl');
+  reflections.forEach(function(r){
+    var item = document.createElement('div');
+    item.className = 'tl-item fade';
+    item.innerHTML = '<div class="date">'+r.date+'</div><h3>'+r.title+'</h3>';
+    var body = document.createElement('div');
+    body.className = 'body';
+    var paras = String(r.text).split(/\n\s*\n/);
+    paras.forEach(function(p){ if(p.trim()){ var pp = document.createElement('p'); pp.textContent = p.trim(); body.appendChild(pp); } });
+    item.appendChild(body);
+    if(paras.length > 2){
+      body.classList.add('collapsed');
+      var btn = document.createElement('button');
+      btn.className = 'expand-btn';
+      btn.textContent = '展开 ↓';
+      btn.addEventListener('click', function(){
+        if(body.classList.contains('collapsed')){
+          body.classList.remove('collapsed');
+          btn.textContent = '收起 ↑';
+        }else{
+          body.classList.add('collapsed');
+          btn.textContent = '展开 ↓';
+        }
+      });
+      item.appendChild(btn);
+    }
+    tl.appendChild(item);
+  });
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    },{threshold:.12});
+    document.querySelectorAll('.fade').forEach(function(el){ io.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>
