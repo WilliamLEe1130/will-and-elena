@@ -63,7 +63,7 @@ var reflections = [
 /* 手写版照片:把手写的反思拍成照片放进 photos/ 文件夹,
    把文件名填到下面(如 'photos/hand.jpg'),反思页底部自动显示
    没填之前,反思页显示占位框 */
-var handwriting = '';
+var handwriting = 'photos/handwriting.jpg';
 
 
 /* ─────────────────────────────────────
